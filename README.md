@@ -1,12 +1,20 @@
-# powr-spl-token
+<p align="center">
+  <a href="https://powerledger.io">
+    <img alt="powr" src="https://raw.githubusercontent.com/PowerLedger/powr-spl-token/19ca2175db07ab9df9b5477eb28d369300ca6025/powr-logo.png" width="250" />
+  </a>
+</p>
+
+# POWR spl-token
+
 POWR tokens on Solana
 
-## taking PLBS snapshot
+## POWR token address on Solana mainnet-beta: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
 
-```
-~/bin/cluster-monitoring/get-powr-deposits-and-withdrawals.js
+[solanafm:PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR](https://solana.fm/address/PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR/transactions?cluster=mainnet-alpha)
 
-```
+[solscan:PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR](https://solscan.io/token/PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR)
+
+[explorer:PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR](https://explorer.solana.com/address/PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR)
 
 ## spl-token commands for deployment of POWR on Solana
 
@@ -14,10 +22,6 @@ POWR tokens on Solana
 # Set default keypair and mainnet-beta env
 solana config set -k <PATH TO DEFAULT AUTH KEYPAIR>
 
-# devnet
-solana config set -ud
-# testnet
-solana config set -ut
 # mainnet-beta
 solana config set -um
 
@@ -37,36 +41,27 @@ spl-token display <TOKEN_MINT_ADDRESS>
 spl-token set-transfer-hook --disable <TOKEN_MINT_ADDRESS>
 
 # Initialize metadata (Check where to store the metadata json file, IPFS?)
-spl-token initialize-metadata <TOKEN_MINT_ADDRESS> 'Powerledger' 'POWR' 'https://<GCP BUCKET? IPFS? web3.storage Github??>/metadata.json'
+spl-token initialize-metadata <TOKEN_MINT_ADDRESS> 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
 
 # Update metadata IF NEEDED
 # spl-token update-metadata <TOKEN_MINT_ADDRESS> niceness 100%
 
 # Generate keypairs for the first mint recipient
-solana-keygen grind --starts-with 1st:1
-solana-keygen grind --starts-with 2nd:1
-solana-keygen grind --starts-with auth:1
+solana-keygen grind --starts-with init:1
 
 # Create an ATA for the mint of the initial supply
-spl-token create-account <TOKEN_MINT_ADDRESS> 1st... .json 
+spl-token create-account <TOKEN_MINT_ADDRESS> init... .json 
 # OR. --owner <OWNER_ADDRESS> Address of the primary authority controlling a mint or account. Defaults to the client keypair address.
-spl-token create-account <TOKEN_MINT_ADDRESS> 1st... .json --owner <PATH TO AUTH KEYPAIR>
+spl-token create-account <TOKEN_MINT_ADDRESS> init... .json --owner <PATH TO AUTH KEYPAIR>
 
 # Check balance
-spl-token balance --address 1st... .json
-
-spl-token create-account <TOKEN_MINT_ADDRESS> 2nd... .json
-# OR.
-spl-token create-account <TOKEN_MINT_ADDRESS> 2nd... .json --owner <PATH TO AUTH KEYPAIR>
-
-# Check balance
-spl-token balance --address 2nd... .json
+spl-token balance --address init... .json
 
 # Mint some tokens (how many?)
-spl-token mint <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (1st... .json)>
+spl-token mint <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (init... .json)>
 
 # Send some tokens as test
-spl-token transfer <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (2nd... .json)>  --owner <1st... .json>
+spl-token transfer <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (???... .json)>  --owner <init... .json>
 
 # Update Token Mint authority address
 spl-token authorize <TOKEN_MINT_ADDRESS> mint <auth... .json>_ADDRESS
@@ -74,95 +69,86 @@ spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-mint <auth... .js
 spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-fee <auth... .json>_ADDRESS
 spl-token authorize <TOKEN_MINT_ADDRESS> transfer-hook-program-id <auth... .json>_ADDRESS
 spl-token authorize <TOKEN_MINT_ADDRESS> metadata-pointer <auth... .json>_ADDRESS
-# SPL-TOKEN-DEPLOYMENT ENDS❗️
-
-# MISC
-# Note: Token-2022 ATAs are always immutable, ignoring --immutable parameter
-# Tokens sent to keywKyugZ26CfuHAPG5HwoFY7oUae5dpBekbMGwk8L5 -> pda (nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T) -> CR5oLD96JRSfEnAVFoVqjrMYCS8XGjoREersqfWr8DnF
-spl-token mint nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T 100
-spl-token create-account nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T othTVn66nv5SkA37Ww2CDaDDHwQpq26tVsn5U1BSk8K.json --owner owng6D2q582U5uL29hv92nptncCXD65rHsi3BJL5kDJ --fee-payer keywKyugZ26CfuHAPG5HwoFY7oUae5dpBekbMGwk8L5.json
-spl-token transfer nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T 10 othTVn66nv5SkA37Ww2CDaDDHwQpq26tVsn5U1BSk8K --fund-recipient
-spl-token create-account nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T othGqcrHdaRQ5swkS9fVM4GQXubEF4btpXDkW3zx3A1.json --immutable --owner owng6D2q582U5uL29hv92nptncCXD65rHsi3BJL5kDJ --fee-payer keywKyugZ26CfuHAPG5HwoFY7oUae5dpBekbMGwk8L5.json 
-spl-token transfer nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T 15 othGqcrHdaRQ5swkS9fVM4GQXubEF4btpXDkW3zx3A1 --fund-recipient
-spl-token transfer nic9cZWo9pY36sW8MR69zfe5x1AoKxrKFDKZjcF8g8T 13 PeoExexcsE4srQCkhhbrHcnA15TaQc994SCGWPnM5uG --fund-recipient
-
-# Proposed JSON metadata for POWR
-
-{
-  "name": "Powerledger",
-  "symbol": "POWR",
-  "description": "Powerledger POWR token expanded on Solana mainnet-beta",
-  "image": "https://bafybeieyr6pyt5fqhuzl4cohvcduubssrfszbmw6dve5pbslnb3oopzx2u.ipfs.w3s.link/powr-logo.png"
-}
-
-{
-  "name": "Powerledger",
-  "symbol": "POWR",
-  "description": "Powerledger POWR token expanded on Solana mainnet-beta",
-  "website": "https://powerledger.io",
-  "image": "https://bafybeieyr6pyt5fqhuzl4cohvcduubssrfszbmw6dve5pbslnb3oopzx2u.ipfs.w3s.link/powr-logo.png"
-}
 ```
+
+## deployment logs
 
 ``` bash
-# utils
-solana-keygen grind --starts-with tk9:1
-solana-keygen new --no-outfile --no-bip39-passphrase
-solana-keygen pubkey usb://ledger\?key=0
-solana config set -k usb://ledger\?key=0
-# Paypal USD (PYUSD)
-spl-token display 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo -um
-```
+# -------------------------------------------------------
+% spl-token create-token \
+--program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb \
+--enable-metadata \
+--decimals 6 \
+--enable-confidential-transfers manual \
+--transfer-hook randh9AtTKEKB6nMXjH7874Fp5o2pzbQhRGHmei4rBM \
+./keypairs/PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR.json
+Creating token PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR under program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
 
-``` json
-{  "name":"PayPal USD",  "symbol":"PYUSD",  "description":"PayPal USD is designed to contribute to the opportunity stablecoins offer for payments and is 100% backed by U.S. dollar deposits, short-term U.S Treasuries and similar cash equivalents. PayPal USD is redeemable 1:1 for U.S. dollars and is issued by Paxos Trust Company.",  "image":"https://424565.fs1.hubspotusercontent-na1.net/hubfs/424565/PYUSDLOGO.png"}
+To initialize metadata inside the mint, please run `spl-token initialize-metadata PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR <YOUR_TOKEN_NAME> <YOUR_TOKEN_SYMBOL> <YOUR_TOKEN_URI>`, and sign with the mint authority.
 
-{
-  "name": "PayPal USD",
-  "symbol": "PYUSD",
-  "description": "PayPal USD is designed to contribute to the opportunity stablecoins offer for payments and is 100% backed by U.S. dollar deposits, short-term U.S Treasuries and similar cash equivalents. PayPal USD is redeemable 1:1 for U.S. dollars and is issued by Paxos Trust Company.",
-  "image": "https://424565.fs1.hubspotusercontent-na1.net/hubfs/424565/PYUSDLOGO.png"
-}
-```
+Address:  PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+Decimals:  6
 
-``` bash
-# PAYPAL USD spl-token
-% spl-token display 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo -um
+Signature: g42Tf7BcbQmvn2ntNADXTByLCMA2jRM7Jd3nDEX9Wv7iFtzT8LTThgAfu6Y1Y2XYGQSU145kpfJjZ9pHZFyYX46
+
+# -------------------------------------------------------
+% spl-token display PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+
 SPL Token Mint
-  Address: 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo
+  Address: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
   Program: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
-  Supply: 364063131373881
+  Supply: 0
   Decimals: 6
-  Mint authority: 5gUuDFHswKi2QMA1qJHf6FEVhNCrHnyAdfWniMaUUPE4
-  Freeze authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
+  Mint authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+  Freeze authority: (not set)
 Extensions
-  Close authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
-  Permanent delegate: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
-  Transfer fees:
-    Current fee: 0bps
-    Current maximum: 0
-    Config authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
-    Withdrawal authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
-    Withheld fees: 0
   Confidential transfer:
-    Authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
     Account approve policy: manual
     Audit key: audits are disabled
-  Confidential transfer fee:
-    Authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
-    Withdraw Withheld Encryption key: HDfmQztzBN2Cc3rkDZuL88SfWw5sSajVMyiz5QaQHFc=
-    Harvest to mint: Enabled
-    Withheld Amount: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   Transfer Hook:
-    Authority: 2apBGMsS6ti9RyF5TwQTDswXBWskiJP2LD4cUEDqYJjk
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+    Program Id: randh9AtTKEKB6nMXjH7874Fp5o2pzbQhRGHmei4rBM
+  Metadata Pointer:
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+    Metadata address: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+
+# -------------------------------------------------------
+% spl-token set-transfer-hook --disable PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+Setting Transfer Hook Program id for PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR to disabled
+
+Signature: 5aQEgSTMuWTsggiYFU4aoasYMwpjDxJhYPox6SFRkhMf5uNYSAjBemkJAZfdTGAzqjemds9o9d1MTwyqrHtrgGBd
+
+# -------------------------------------------------------
+% spl-token initialize-metadata PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
+
+Signature: 4XgxaTG6mig7jpUq7VjwQ29BXMzNLhSCuyGTWeVBKhWqh5iuj4xX2VWgya87BmP5XDjT56MZnYu9MZPXPG3L2wKB
+
+# -------------------------------------------------------
+% spl-token display PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+
+SPL Token Mint
+  Address: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+  Program: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+  Supply: 0
+  Decimals: 6
+  Mint authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+  Freeze authority: (not set)
+Extensions
+  Confidential transfer:
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+    Account approve policy: manual
+    Audit key: audits are disabled
+  Transfer Hook:
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
     Program Id: Disabled
   Metadata Pointer:
-    Authority: 9nEfZqzTP3dfVWmzQy54TzsZqSQqDFVW4PhXdG9vYCVD
-    Metadata address: 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo
+    Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+    Metadata address: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
   Metadata:
-    Update Authority: 9nEfZqzTP3dfVWmzQy54TzsZqSQqDFVW4PhXdG9vYCVD
-    Mint: 2b1kV6DkPAnxd5ixfnxCpjxmKwqjjaYmCZfHsFu24GXo
-    Name: PayPal USD
-    Symbol: PYUSD
-    URI: https://token-metadata.paxos.com/pyusd_metadata/prod/solana/pyusd_metadata.json
+    Update Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
+    Mint: PWrRWNTMkccctdiJEs6kEFNDgTAV8rQzhT2afckW1gR
+    Name: Powerledger
+    Symbol: POWR
+    URI: https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json
 ```
