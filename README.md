@@ -10,11 +10,11 @@ POWR tokens on Solana
 
 ## POWR token address on Solana mainnet-beta: POWR...
 
-[solanafm:POWR...](https://solana.fm/address/POWR.../transactions?cluster=mainnet-alpha)
+[solanafm:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://solana.fm/address/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w/transactions?cluster=mainnet-alpha)
 
-[solscan:POWR...](https://solscan.io/token/POWR...)
+[solscan:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://solscan.io/token/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w)
 
-[explorer:POWR...](https://explorer.solana.com/address/POWR...)
+[explorer:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://explorer.solana.com/address/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w)
 
 ## spl-token commands for deployment of POWR on Solana
 
@@ -87,28 +87,27 @@ spl-token authorize <TOKEN_MINT_ADDRESS> group <auth... .json>_ADDRESS
 ## deployment logs
 
 ``` bash
-# -------------------------------------------------------
-% spl-token create-token \
+# Create mint
+user@hostname ~ % spl-token create-token \
 --program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb \
 --enable-metadata \
 --decimals 6 \
 --enable-confidential-transfers manual \
 --transfer-hook randh9AtTKEKB6nMXjH7874Fp5o2pzbQhRGHmei4rBM \
-./keypairs/POWR....json
-Creating token POWR... under program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+./keypairs/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w.json
+Creating token PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w under program TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
+To initialize metadata inside the mint, please run `spl-token initialize-metadata PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w <YOUR_TOKEN_NAME> <YOUR_TOKEN_SYMBOL> <YOUR_TOKEN_URI>`, and sign with the mint authority.
 
-To initialize metadata inside the mint, please run `spl-token initialize-metadata POWR... <YOUR_TOKEN_NAME> <YOUR_TOKEN_SYMBOL> <YOUR_TOKEN_URI>`, and sign with the mint authority.
-
-Address:  POWR...
+Address:  PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
 Decimals:  6
 
-Signature: ...
+Signature: 3ZVBcKd5jeJReUCKMbRcEVaDz2kX43yNeeGRwm9jKVArPJy6rfhRFpTEETNMMt2K1C8fj3PUkRCe3PfVgPueWxTF
 
-# -------------------------------------------------------
-% spl-token display POWR...
+# Display mint extensions
+user@hostname ~ % spl-token display PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
 
 SPL Token Mint
-  Address: POWR...
+  Address: PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
   Program: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
   Supply: 0
   Decimals: 6
@@ -124,24 +123,24 @@ Extensions
     Program Id: randh9AtTKEKB6nMXjH7874Fp5o2pzbQhRGHmei4rBM
   Metadata Pointer:
     Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
-    Metadata address: POWR...
+    Metadata address: PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
 
-# -------------------------------------------------------
-% spl-token set-transfer-hook --disable POWR...
-Setting Transfer Hook Program id for POWR... to disabled
+# Disable transfer hook
+user@hostname ~ % spl-token set-transfer-hook --disable PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
+Setting Transfer Hook Program id for PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w to disabled
 
-Signature: ...
+Signature: 3FFbwNzBx62N1CUnebx4EEGrvND4b8NmZmf4p2G3ZCHoQ5bsGL5eFobnYqDvDnGRfPQWtudWrDWgu5NAdf52UU9c
 
-# -------------------------------------------------------
-% spl-token initialize-metadata POWR... 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
+# Initialize metadata
+user@hostname ~ % spl-token initialize-metadata PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
 
-Signature: ...
+Signature: 4eg9oQPVqfWqrPP3nwewW5kNA57AjxQU3pZ3btBDJxCNMNZhZxpfbwfu8TNpQ6bvndxLAVju4thzwwzAosEKtbCE
 
-# -------------------------------------------------------
-% spl-token display POWR...
+# Display mint
+user@hostname ~ % spl-token display PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
 
 SPL Token Mint
-  Address: POWR...
+  Address: PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
   Program: TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb
   Supply: 0
   Decimals: 6
@@ -157,10 +156,10 @@ Extensions
     Program Id: Disabled
   Metadata Pointer:
     Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
-    Metadata address: POWR...
+    Metadata address: PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
   Metadata:
     Update Authority: initJDrFFiBjjrEmUvAN5oSQF9YT2os3tGvbfZbGWHV
-    Mint: POWR...
+    Mint: PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w
     Name: Powerledger
     Symbol: POWR
     URI: https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json
