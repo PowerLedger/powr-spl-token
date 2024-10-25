@@ -6,85 +6,13 @@
 
 # POWR spl-token
 
-POWR tokens on Solana
+Powerledger POWR tokens on Solana
 
-## POWR token address on Solana mainnet-beta: POWR...
+## POWR token address on Solana mainnet-beta:
 
-[solanafm:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://solana.fm/address/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w/transactions?cluster=mainnet-alpha)
+[PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://solana.fm/address/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w/transactions?cluster=mainnet-alpha)
 
-[solscan:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://solscan.io/token/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w)
-
-[explorer:PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w](https://explorer.solana.com/address/PowerQT5bz29ch1ABYDeBhmp9CJM63kAmqgVP41ko4w)
-
-## spl-token commands for deployment of POWR on Solana
-
-``` bash
-# Set default keypair and mainnet-beta env
-solana config set -k <PATH TO DEFAULT AUTH KEYPAIR>
-
-# mainnet-beta
-solana config set -um
-
-# Create Mint (transfer-hook is using a random wallet that later is disabled)
-spl-token create-token \
---program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb \
---enable-metadata \
---decimals 6 \
---enable-confidential-transfers manual \
---transfer-hook <RANDOM_ADDRESS> \
-<TOKEN_MINT_ADDRESS>.json
-
-# Display Mint properties
-spl-token display <TOKEN_MINT_ADDRESS>
-
-# Disable transfer hook
-spl-token set-transfer-hook --disable <TOKEN_MINT_ADDRESS>
-
-# Initialize metadata (Check where to store the metadata json file, IPFS?)
-spl-token initialize-metadata <TOKEN_MINT_ADDRESS> 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
-
-# Update metadata IF NEEDED
-# spl-token update-metadata <TOKEN_MINT_ADDRESS> niceness 100%
-
-# Generate keypairs for the first mint recipient
-solana-keygen grind --starts-with init:1
-
-# Create an ATA for the mint of the initial supply
-spl-token create-account <TOKEN_MINT_ADDRESS> init... .json 
-# OR. --owner <OWNER_ADDRESS> Address of the primary authority controlling a mint or account. Defaults to the client keypair address.
-spl-token create-account <TOKEN_MINT_ADDRESS> init... .json --owner <PATH TO AUTH KEYPAIR>
-
-# Check balance
-spl-token balance --address init... .json
-
-# Mint some tokens (how many?)
-spl-token mint <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (init... .json)>
-
-# Send some tokens as test
-spl-token transfer <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (???... .json)>  --owner <init... .json>
-
-# Update Token Mint authority addresses
-spl-token authorize <TOKEN_MINT_ADDRESS> mint <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-mint <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-fee <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> transfer-hook-program-id <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> metadata-pointer <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> metadata <auth... .json>_ADDRESS
-
-spl-token authorize <TOKEN_MINT_ADDRESS> freeze <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> owner <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> close <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> close-mint <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> transfer-fee-config <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> withheld-withdraw <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> interest-rate <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> permanent-delegate <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> group-pointer <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> group-member-pointer <auth... .json>_ADDRESS
-spl-token authorize <TOKEN_MINT_ADDRESS> group <auth... .json>_ADDRESS
-```
-
-## deployment logs
+## Deployment logs
 
 ``` bash
 # Create mint
@@ -163,4 +91,73 @@ Extensions
     Name: Powerledger
     Symbol: POWR
     URI: https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json
+```
+
+## spl-token commands reference
+
+``` bash
+# Set default keypair and mainnet-beta env
+solana config set -k <PATH TO DEFAULT AUTH KEYPAIR>
+
+# mainnet-beta
+solana config set -um
+
+# Create Mint (transfer-hook is using a random wallet that later is disabled)
+spl-token create-token \
+--program-id TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb \
+--enable-metadata \
+--decimals 6 \
+--enable-confidential-transfers manual \
+--transfer-hook <RANDOM_ADDRESS> \
+<TOKEN_MINT_ADDRESS>.json
+
+# Display Mint properties
+spl-token display <TOKEN_MINT_ADDRESS>
+
+# Disable transfer hook
+spl-token set-transfer-hook --disable <TOKEN_MINT_ADDRESS>
+
+# Initialize metadata (Check where to store the metadata json file, IPFS?)
+spl-token initialize-metadata <TOKEN_MINT_ADDRESS> 'Powerledger' 'POWR' 'https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr_metadata.json'
+
+# Update metadata IF NEEDED
+# spl-token update-metadata <TOKEN_MINT_ADDRESS> niceness 100%
+
+# Generate keypairs for the first mint recipient
+solana-keygen grind --starts-with init:1
+
+# Create an ATA for the mint of the initial supply
+spl-token create-account <TOKEN_MINT_ADDRESS> init... .json 
+# OR. --owner <OWNER_ADDRESS> Address of the primary authority controlling a mint or account. Defaults to the client keypair address.
+spl-token create-account <TOKEN_MINT_ADDRESS> init... .json --owner <PATH TO AUTH KEYPAIR>
+
+# Check balance
+spl-token balance --address init... .json
+
+# Mint some tokens
+spl-token mint <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS (init... .json)>
+
+# Sending some tokens
+spl-token transfer <TOKEN_MINT_ADDRESS> <AMOUNT> <RECIPIENT_TOKEN_ACCOUNT_ADDRESS>  --owner <init... .json>
+
+# Update Token Mint authority addresses
+spl-token authorize <TOKEN_MINT_ADDRESS> mint <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-mint <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> confidential-transfer-fee <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> transfer-hook-program-id <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> metadata-pointer <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> metadata <auth... .json>_ADDRESS
+
+# Additional authorizations updates commands, just for reference
+spl-token authorize <TOKEN_MINT_ADDRESS> freeze <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> owner <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> close <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> close-mint <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> transfer-fee-config <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> withheld-withdraw <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> interest-rate <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> permanent-delegate <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> group-pointer <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> group-member-pointer <auth... .json>_ADDRESS
+spl-token authorize <TOKEN_MINT_ADDRESS> group <auth... .json>_ADDRESS
 ```
