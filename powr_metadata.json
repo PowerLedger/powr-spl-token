@@ -3,5 +3,5 @@
   "symbol": "POWR",
   "description": "Powerledger POWR token expanded on Solana mainnet-beta",
   "website": "https://powerledger.io",
-  "image": "https://github.com/PowerLedger/powr-spl-token/blob/main/powr-logo.png?raw=true"
+  "image": "https://raw.githubusercontent.com/PowerLedger/powr-spl-token/refs/heads/main/powr-logo.png"
 }
